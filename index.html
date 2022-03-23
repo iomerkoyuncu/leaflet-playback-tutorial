@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playback Tutorial</title>
+    <link rel="stylesheet" href="./lib/leaflet/leaflet.css">
+    <link rel="stylesheet" href="../dist/control.playback.css">
+    <script src="./lib/leaflet/leaflet.js"></script>
+    <script src="../dist/control.trackplayback.js"></script>
+    <script src="../dist/leaflet.trackplayback.js"></script>
+    
+  </head>
+  <body>
+    <div id='mapid' style=" position: absolute; left: 0; top: 0; right: 0; bottom: 0; width: 100%; height: 100%; overflow: hidden;"></div>
+    
+    <script>
+      
+      const map = L.map('mapid').setView([37.872382, 32.493241], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+      
+      
+      const data = []
+       
+      point = [
+          [
+            32.46391296386719,
+            37.86699388568428
+          ],
+          [
+            32.47627258300781,
+            37.87017844248131
+          ],
+          [
+            32.49086380004883,
+            37.87078823552829
+          ],
+          [
+            32.49258041381836,
+            37.87099149875574
+          ],
+          [
+            32.494211196899414,
+            37.8724143256462
+          ],
+          [
+            32.49309539794921,
+            37.87458238997454
+          ],
+          [
+            32.49412536621094,
+            37.87803761061809
+          ],
+          [
+            32.49884605407714,
+            37.8867765629102
+          ],
+          [
+            32.50528335571289,
+            37.89531128263497
+          ],
+          [
+            32.51266479492187,
+            37.9058089853995
+          ],
+          [
+            32.51755714416504,
+            37.91373206606471
+          ],
+          [
+            32.509145736694336,
+            37.918810515143
+          ],
+          [
+            32.50802993774414,
+            37.92409173023469
+          ],
+          [
+            32.511892318725586,
+            37.94162535206254
+          ],
+          [
+            32.51283645629883,
+            37.94805555498257
+          ],
+          [
+            32.52124786376953,
+            37.9481232383363
+          ],
+          [
+            32.523136138916016,
+            37.94907079874213
+          ],
+          [
+            32.52279281616211,
+            37.95394377350263
+          ],
+          [
+            32.5224494934082,
+            37.95719224376526
+          ],
+          [
+            32.51953125,
+            37.96010220971056
+          ],
+          [
+            32.51978874206543,
+            37.966395462637834
+          ]
+        ]
+
+        let time = 1502140341; 
+        let inc = 2000;
+        
+        point.forEach(element => {
+          const revElement = element.reverse()
+          
+          let lon = revElement[1];
+          let lat = revElement[0];
+          time = time + inc;
+
+
+          const dataset = {
+              "lng":lon,
+              "lat":lat,
+              "time":time,
+              "dir":0,
+              "heading":0,
+              "info":[]
+            }
+          
+          data.push(dataset)
+        });
+
+        console.log(data)
+
+        const trackplayback = L.trackplayback(data, map, {
+          targetOptions: {
+            useImg: true,
+            imgUrl: './ship.png'
+          }
+        });
+        const trackplaybackControl = L.trackplaybackcontrol(trackplayback);
+        trackplaybackControl.addTo(map);
+      </script>
+
+</body>
+</html>
